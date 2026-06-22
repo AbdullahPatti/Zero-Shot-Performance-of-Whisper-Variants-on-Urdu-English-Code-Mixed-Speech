@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ model_name }} · {{ language }} | Whisper Results</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>Whisper Zero-Shot</h1>
+        <p class="urdu-subtitle">اردو-انگریزی کوڈ مکسڈ تقریر کا تجزیہ</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">Navigation</div>
+        <a href="/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Back to Dashboard
+        </a>
+        <div class="nav-section">Current View</div>
+        <a href="#" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          {{ model_name }} · {{ language }}
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        وسپر ماڈل کی صفر شاٹ کارکردگی<br/>اردو انگریزی کوڈ مکسڈ تقریر
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="mobile-header">
+        <h1>Whisper Zero-Shot</h1>
+        <p class="urdu-subtitle">اردو-انگریزی کوڈ مکسڈ تقریر</p>
+      </div>
+
+      <a class="back-link" href="/">&larr; Back to Dashboard</a>
+
+      <div class="page-header">
+        <h2>{{ model_name }} · {{ language }}</h2>
+        <p class="subtitle">Detailed transcription records for this model and language combination</p>
+        <p class="urdu-title">اس ماڈل اور زبان کے امتزاج کے تفصیلی نتائج</p>
+      </div>
+
+      <section>
+        <div class="record-list">
+          {% for record in records %}
+          <div class="record-card">
+            <div class="record-head">
+              <span>{{ record.filename }} · {{ record.speaker }}</span>
+              <strong>WER: {{ '%.4f'|format(record.wer or 0) }}</strong>
+            </div>
+            <div class="record-columns">
+              <div>
+                <h4>حوالہ (Reference)</h4>
+                <p>{{ record.reference }}</p>
+              </div>
+              <div>
+                <h4>متوقع (Hypothesis)</h4>
+                <p>{{ record.hypothesis }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
